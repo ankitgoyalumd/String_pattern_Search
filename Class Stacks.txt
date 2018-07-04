@@ -1,0 +1,73 @@
+package com.company;
+import sun.font.TrueTypeFont;
+// This class to implement stack and include peek, pop, get length, empty methods
+import java.util.Arrays;
+public class Stacks {
+    private int maxsize;// this is the variable to take size of character array to be analyzed
+    private char[] stackarray;// array declaration
+    private int size;// this will keep track on size as we push and pop
+    private char z = 'z';// this will be a dummy variable indicating that the cell is empty.
+    private char look;
+
+    // method to create an array of size equivalent to string under analysis
+    public char[] stacks( int arraySize){
+        size = 0;
+        maxsize = arraySize;
+        char[] stackarray = new char[maxsize];
+        Arrays.fill(stackarray,z);
+        return stackarray;
+    }
+    //method to fill elements of type char in the array
+    public char[] push (char B[], char p){
+        if ( size+ 1 <= maxsize) {
+            B[size] = p;
+            int count=size;
+            size = size + 1;
+        }
+        else {
+            System.out.println("Maximum Size has Reached");
+        }
+        return B;
+    }
+    // method to remove elements of stack
+    public  char pop (char B[]) {
+        char q;
+        if (size -1>= 0) {
+            q = B[size-1];
+            B[size-1] = z;
+            size = size - 1;
+        } else {
+            q = 0;
+            System.out.println("Stack is empty");
+        }
+        return q;
+    }
+    // finding length of stack, note this method is popping the stack to count variables. Stack will be empty after running this
+    public  int getSize (char B[]) {
+        int i=0;
+        while (empty(B)!=1){
+            pop(B);
+            i=i+1;
+        }
+        return i;
+    }
+    // This method provides the top most item on the stack without changing anything in the stack
+    public char peek(char B[]) {
+        if (size-1 <= maxsize) {
+            look= B[size-1];
+        }
+        else{
+            System.out.println("out of bounds");
+        }
+        return look;
+    }
+    // This method checks if the stack is empty or not
+    public int empty(char B[]){
+        if (size-1<0){
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+}

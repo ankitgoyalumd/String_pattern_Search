@@ -1,0 +1,299 @@
+package com.company;
+public class Indentify {
+    private int i;
+    private char o;
+    private char[] a;// Array initialization for additional stack
+    private char[] b;// Array initialization for additional stack
+    private char[] Master;// Array initialization of stack in whhich the elements of string are stored
+    com.company.Stacks testa = new com.company.Stacks();// Reference to call methods from Class Stacks
+    com.company.Stacks testb = new com.company.Stacks();// Reference to call methods from Class Stacks
+    com.company.Stacks testMaster = new com.company.Stacks();// Reference to call methods from Class Stacks
+
+    // Method for Identifying Language L1;
+    //This method will evaluate if number of A's and B's are equal in the string
+    // Additionally the module will look for characters other than A or B that user might enter by mistake
+    public void LangL1(char[] A) {
+        // checking for null strings
+        if (A.length == 0) {
+            System.out.println("Input is empty");
+        }
+        // creating 2 stacks to manage A's and B's
+        else {
+            a = testa.stacks(A.length);
+            b = testb.stacks(A.length);
+            //creating a master stack;
+            Master = testMaster.stacks(A.length);
+            //push the characters from A into our Master Stack
+            for (i = 0; i < A.length; i++) {
+                testMaster.push(Master, A[i]);
+            }
+            search:
+            {
+                while (testMaster.empty(Master) != 1) {
+                    // This loop checks if there is anything other than A or B
+                    if (testMaster.peek(Master) != 'A' && testMaster.peek(Master) != 'B') {
+                        System.out.println("Not of Type L1");
+                        break search;
+                        // This loop checks if element on top of stack is  A
+                    } else if (testMaster.peek(Master) == 'A') {
+                        // Creating a stack containing only element A
+                        char dummy = testMaster.pop(Master);
+                        testa.push(a, dummy);
+                        // Creating a stack containing only element B
+                    } else if (testMaster.peek(Master) == 'B') {
+                        char tummy = testMaster.pop(Master);
+                        testb.push(b, tummy);
+                    }
+                }
+                if (testa.getSize(a) == testb.getSize(b)) {
+                    new String(A);
+                    System.out.println("String is of type L1");
+                } else {
+                    new String(A);
+                    System.out.println("String is not of type L1");
+                }
+            }
+        }
+    }
+
+    // Method for identifying Language L2. The method will evaluate if A's and B's are equal and will further
+    // check if A is below B in the stack.
+    public void LangL2(char[] A) {
+        outerloop:
+        {
+            // checking for null strings
+            if (A.length == 0) {
+                System.out.println("Input is empty");
+                break outerloop;
+            } else {
+                // creating empty stacks of length equivalent to string under analysis
+                a = testa.stacks(A.length);
+                b = testb.stacks(A.length);
+                //creating a master stack to fill elements of string under analysis
+                Master = testMaster.stacks(A.length);
+                // fill the Master array with character values
+                for (i = 0; i < A.length; i++) {
+                    testMaster.push(Master, A[i]);
+                }
+                // check if first value is B or not
+                if (testMaster.peek(Master) != 'B') {
+                    System.out.println("String is not of type L2");
+                    break outerloop;
+                }
+                else {
+                    while (testMaster.empty(Master) != 1) {
+                        while (testMaster.peek(Master) == 'B') {
+                            // create stack with all element as 'B'
+                            char dummy = testMaster.pop(Master);
+                            testb.push(b, dummy);
+                        }
+                        if (testMaster.peek(Master) == 'A') {
+                            // if element is A put it in stack A
+                            char dummy = testMaster.pop(Master);
+                            testa.push(a, dummy);
+                        } else {
+                            System.out.println("String is not of type L2");
+                            break outerloop;
+                        }
+                    }
+                    if (testa.getSize(a) != testb.getSize(b)) {
+                        System.out.println("String is not of type L2");
+                        break outerloop;
+                    }
+                    System.out.println("String is of type L2");
+                }
+            }
+        }
+
+    }
+
+    // Method to test if given string is of type L3
+    // This method evaluates if number of B's is twice the number of A's. Additionally the method looks for if
+    //characters other than A or B are present. The method further evaluates if all B's are preceded by A's
+    public void LangL3(char[] A) {
+        outerloop:
+        {
+            // checking for null strings
+            if (A.length == 0) {
+                System.out.println("Input is empty");
+                break outerloop;
+            } else {
+                // creating empty stacks for analysis
+                a = testa.stacks(A.length);
+                b = testb.stacks(A.length);
+                //creating a master stack;
+                Master = testMaster.stacks(A.length);
+                for (i = 0; i < A.length; i++) {
+                    testMaster.push(Master, A[i]);// fill the Master array with character values
+                }
+                // check if first value is B or not
+                if (testMaster.peek(Master) != 'B') {
+                    System.out.println("String is not of type L3");
+                    break outerloop;
+                }
+                // if first value is A, then
+                else {
+                    while (testMaster.empty(Master) != 1) {
+                        // fill the stack with all B encountered
+                        while (testMaster.peek(Master) == 'B') {
+                            char dummy = testMaster.pop(Master);
+                            testb.push(b, dummy);
+                        }
+                        if (testMaster.peek(Master) == 'A') {
+                            // after filling of B is A is encountered, fill the stack a with A's
+                            char dummy = testMaster.pop(Master);
+                            testa.push(a, dummy);
+                        } else {
+                            System.out.println("String is not of type L3");
+                            break outerloop;
+                        }
+                    }
+                    // checking the condition for Language L3
+                    if (testa.getSize(a) != 2 * testb.getSize(b)) {
+                        System.out.println("String is not of type L3");
+                        break outerloop;
+                    }
+                    System.out.println("String is of type L3");
+                }
+            }
+        }
+
+    }
+
+    // Method to determine if the language is of type L4
+    //This method first evaluates the pattern A^nB^m by calculating m and n. Then it resolves rest of string and verify
+    // it against this pattern. Method further searches for characters other than A and B and handles them accordingly.
+    public void LangL4(char[] A) {
+        outerloop:
+        {
+            // check for null strings
+            if (A.length == 0) {
+                System.out.println("Input is empty");
+                break outerloop;
+            } else {
+                // creating empty stacks for analysis
+                a = testa.stacks(A.length);
+                b = testb.stacks(A.length);
+                //creating a master stack;
+                // fill the Master array with character values
+                Master = testMaster.stacks(A.length);
+                for (i = 0; i < A.length; i++) {
+                    testMaster.push(Master, A[i]);
+                }
+                // check if first value is B or not
+                if (testMaster.peek(Master) != 'B') {
+                    System.out.println("String is not of type L4");
+                    break outerloop;
+                }
+                else {
+                    // checks if top element of Stack is B
+                    while (testMaster.peek(Master) == 'B') {
+                        char dummy = testMaster.pop(Master);
+                        // creates a stack with all elements as B
+                        testb.push(b, dummy);
+                    }
+                    while (testMaster.empty(Master) != 1) {
+                        // checks if top element is A
+                        if (testMaster.peek(Master) == 'A') {
+                            // creates a stack with all elements as A
+                            char dummy = testMaster.pop(Master);
+                            testa.push(a, dummy);
+                        } else {
+                            break;
+                        }
+                    }
+                    int m = testa.getSize(a);// evaluates sizes of stacks with all elements A
+                    int n = testb.getSize(b);// evaluates sizes of stacks with all elmenets B
+                    // check for empty stack after above code is executed, the code above evaluates first group of A^nB^m
+                    // and finds m and n. The code below evaluates the subsequent letters after first set of A^nB^m
+                    if (testMaster.empty(Master) == 1) {
+                        System.out.println("String is of Type L4");
+                        break outerloop;
+                    }
+                    while (testMaster.empty(Master) != 1){
+                        if(testMaster.peek(Master)!='A'|testMaster.peek(Master)!='B'){
+                            System.out.println("String is not of Type L4");
+                            break outerloop;
+                        }
+                    }
+
+
+                    while (testMaster.empty(Master) != 1) {
+                        while (testMaster.peek(Master) == 'B') {
+                            // creates a stack with all elements as B
+                            char dummy = testMaster.pop(Master);
+                            testb.push(b, dummy);
+                        }
+                        if (testMaster.peek(Master) == 'A') {
+                            // creates a stack with all elements as A
+                            char dummy = testMaster.pop(Master);
+                            testa.push(a, dummy);
+                        } else {
+                            System.out.println("Not of Type L4");
+                        }
+
+                    }
+                    if (testa.getSize(a) != m | testb.getSize(b) != n) {
+                        System.out.println("String is not of type L4");
+                        break outerloop;
+                    }
+                    System.out.println("String is of type L4");
+                }
+            }
+        }
+    }
+
+//Method evaluates if the String is of TYpe L5 or not. Method looks for C and evaluates strings prior to C and after C
+// and check if they are inverted. Method also look for unwanted characters other than A,B or C.
+
+    public void LangL5(char[] A) {
+        outerloop:
+        {
+            // checking for empty string
+            if (A.length == 0) {
+                System.out.println("Input is empty");
+            } else {
+                // creating 2 stacks to manage A's and B's
+                a = testa.stacks(A.length);
+                b = testb.stacks(A.length);
+                //creating a master stack;
+                Master = testMaster.stacks(A.length);
+                //push the characters from A into our Master Stack
+                for (i = 0; i < A.length; i++) {
+                    testMaster.push(Master, A[i]);
+                }
+                // checks if top element is A
+                if (testMaster.peek(Master) != 'A') {
+                    System.out.println("String is not of type L5");
+                    break outerloop;
+                } else {
+                    while (testMaster.peek(Master) != 'C') {
+                        if(testMaster.peek(Master)!='A'&&testMaster.peek(Master)!='B'){
+                            System.out.println("String is not of Type L5");
+                            break outerloop;
+                        }
+                        //empties the Master stack to search C and pops all elements before C into stack a
+                        testa.push(a, testMaster.pop(Master));
+                        if (testMaster.empty(Master) == 1) {
+                            System.out.println("String is not of type L5");
+                            break outerloop;
+                        }
+                    }
+                    while (testMaster.empty(Master) != 1) {
+                        // compares the elements of Master stack and stack a
+                        if (testMaster.pop(Master) == testa.pop(a)) {
+                        } else {
+                            break;
+                        }
+                        break;
+                    }
+                    System.out.println("Sring is of type L5");
+
+                }
+
+
+            }
+        }
+    }
+}
+

@@ -1,0 +1,65 @@
+package com.company;
+import java.io.*;
+import java.util.List;
+import java.util.Scanner;
+import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.ArrayList;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+// for calling the functions from Indentify class
+        com.company.Indentify testLang = new com.company.Indentify();
+// Taking the input from the user
+        Scanner reader = new Scanner(System.in);
+        System.out.println("What is the filename?");
+        String input = reader.nextLine();
+        File file = new File(input + ".txt");
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+
+//Asking the user for output filename to write files in a txt file
+        Scanner o = new Scanner(System.in);
+        System.out.println("What is the name of output file?");
+        String outp = reader.nextLine();
+        String filename=outp+".txt";
+        PrintStream output= new PrintStream(filename);
+        PrintStream console=System.out;
+// Reading the text file by creating array of lists
+        ArrayList<String[]> A = new ArrayList<String[]>();
+        try {
+            String s;
+            List myList = new ArrayList();
+            // read each string and store as list object
+            while ((s = br.readLine()) != null) {
+                myList.add(s);
+            }
+            //Convert List Object back to String
+            Object[] myArray = myList.toArray();
+            // Using a loop to convert each String to array of character
+            System.setOut(output);// directing all outpus to console to output file specified by the user
+            System.out.println("    ANALYSIS OF STRINGS FOR DIFFERENT LANGUAGES    ");
+            // for loop read each string and then convert into array of characters
+            // The block then applies methods for evaluating all 5 languages on the Strings in text file starting from the first string
+            for (int t = 0; t < myArray.length; t++) {
+                String a = myArray[t].toString();
+                //conversion to array of characters
+                char arr[] = a.toCharArray();
+                System.out.println("Analysis for " + a + " :" + " ");
+                testLang.LangL1(arr);// function for testing Language L1
+                testLang.LangL2(arr);// function for testing Language L2
+                testLang.LangL3(arr);// function for testing Language L3
+                testLang.LangL4(arr);// function for testing Language L4
+                testLang.LangL5(arr);// function for testing Language L5 (designed by Ankit)
+            }
+        }
+        finally{
+            if (br.readLine() != null) {
+                br.close();
+            }
+        }
+    }
+
+
+}
