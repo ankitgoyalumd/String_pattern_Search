@@ -1,0 +1,323 @@
+<html>
+<head>
+<title>Indentify.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Indentify.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.company; 
+</span><span class="s0">public class </span><span class="s1">Indentify { 
+    </span><span class="s0">private int </span><span class="s1">i; 
+    </span><span class="s0">private char </span><span class="s1">o; 
+    </span><span class="s0">private char</span><span class="s1">[] a;</span><span class="s2">// Array initialization for additional stack</span><span class="s1"> 
+    </span><span class="s0">private char</span><span class="s1">[] b;</span><span class="s2">// Array initialization for additional stack</span><span class="s1"> 
+    </span><span class="s0">private char</span><span class="s1">[] Master;</span><span class="s2">// Array initialization of stack in whhich the elements of string are stored</span><span class="s1"> 
+    com.company.Stacks testa = </span><span class="s0">new </span><span class="s1">com.company.Stacks();</span><span class="s2">// Reference to call methods from Class Stacks</span><span class="s1"> 
+    com.company.Stacks testb = </span><span class="s0">new </span><span class="s1">com.company.Stacks();</span><span class="s2">// Reference to call methods from Class Stacks</span><span class="s1"> 
+    com.company.Stacks testMaster = </span><span class="s0">new </span><span class="s1">com.company.Stacks();</span><span class="s2">// Reference to call methods from Class Stacks</span><span class="s1"> 
+ 
+    </span><span class="s2">// Method for Identifying Language L1;</span><span class="s1"> 
+    </span><span class="s2">//This method will evaluate if number of A's and B's are equal in the string</span><span class="s1"> 
+    </span><span class="s2">// Additionally the module will look for characters other than A or B that user might enter by mistake</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">LangL1(</span><span class="s0">char</span><span class="s1">[] A) { 
+        </span><span class="s2">// checking for null strings</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(A.length == </span><span class="s3">0</span><span class="s1">) { 
+            System.out.println(</span><span class="s4">&quot;Input is empty&quot;</span><span class="s1">); 
+        } 
+        </span><span class="s2">// creating 2 stacks to manage A's and B's</span><span class="s1"> 
+        </span><span class="s0">else </span><span class="s1">{ 
+            a = testa.stacks(A.length); 
+            b = testb.stacks(A.length); 
+            </span><span class="s2">//creating a master stack;</span><span class="s1"> 
+            Master = testMaster.stacks(A.length); 
+            </span><span class="s2">//push the characters from A into our Master Stack</span><span class="s1"> 
+            </span><span class="s0">for </span><span class="s1">(i = </span><span class="s3">0</span><span class="s1">; i &lt; A.length; i++) { 
+                testMaster.push(Master, A[i]); 
+            } 
+            search: 
+            { 
+                </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">) { 
+                    </span><span class="s2">// This loop checks if there is anything other than A or B</span><span class="s1"> 
+                    </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) != </span><span class="s4">'A' </span><span class="s1">&amp;&amp; testMaster.peek(Master) != </span><span class="s4">'B'</span><span class="s1">) { 
+                        System.out.println(</span><span class="s4">&quot;Not of Type L1&quot;</span><span class="s1">); 
+                        </span><span class="s0">break </span><span class="s1">search; 
+                        </span><span class="s2">// This loop checks if element on top of stack is  A</span><span class="s1"> 
+                    } </span><span class="s0">else if </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'A'</span><span class="s1">) { 
+                        </span><span class="s2">// Creating a stack containing only element A</span><span class="s1"> 
+                        </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                        testa.push(a, dummy); 
+                        </span><span class="s2">// Creating a stack containing only element B</span><span class="s1"> 
+                    } </span><span class="s0">else if </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'B'</span><span class="s1">) { 
+                        </span><span class="s0">char </span><span class="s1">tummy = testMaster.pop(Master); 
+                        testb.push(b, tummy); 
+                    } 
+                } 
+                </span><span class="s0">if </span><span class="s1">(testa.getSize(a) == testb.getSize(b)) { 
+                    </span><span class="s0">new </span><span class="s1">String(A); 
+                    System.out.println(</span><span class="s4">&quot;String is of type L1&quot;</span><span class="s1">); 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">new </span><span class="s1">String(A); 
+                    System.out.println(</span><span class="s4">&quot;String is not of type L1&quot;</span><span class="s1">); 
+                } 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s2">// Method for identifying Language L2. The method will evaluate if A's and B's are equal and will further</span><span class="s1"> 
+    </span><span class="s2">// check if A is below B in the stack.</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">LangL2(</span><span class="s0">char</span><span class="s1">[] A) { 
+        outerloop: 
+        { 
+            </span><span class="s2">// checking for null strings</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(A.length == </span><span class="s3">0</span><span class="s1">) { 
+                System.out.println(</span><span class="s4">&quot;Input is empty&quot;</span><span class="s1">); 
+                </span><span class="s0">break </span><span class="s1">outerloop; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s2">// creating empty stacks of length equivalent to string under analysis</span><span class="s1"> 
+                a = testa.stacks(A.length); 
+                b = testb.stacks(A.length); 
+                </span><span class="s2">//creating a master stack to fill elements of string under analysis</span><span class="s1"> 
+                Master = testMaster.stacks(A.length); 
+                </span><span class="s2">// fill the Master array with character values</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(i = </span><span class="s3">0</span><span class="s1">; i &lt; A.length; i++) { 
+                    testMaster.push(Master, A[i]); 
+                } 
+                </span><span class="s2">// check if first value is B or not</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) != </span><span class="s4">'B'</span><span class="s1">) { 
+                    System.out.println(</span><span class="s4">&quot;String is not of type L2&quot;</span><span class="s1">); 
+                    </span><span class="s0">break </span><span class="s1">outerloop; 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">) { 
+                        </span><span class="s0">while </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'B'</span><span class="s1">) { 
+                            </span><span class="s2">// create stack with all element as 'B'</span><span class="s1"> 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testb.push(b, dummy); 
+                        } 
+                        </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'A'</span><span class="s1">) { 
+                            </span><span class="s2">// if element is A put it in stack A</span><span class="s1"> 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testa.push(a, dummy); 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            System.out.println(</span><span class="s4">&quot;String is not of type L2&quot;</span><span class="s1">); 
+                            </span><span class="s0">break </span><span class="s1">outerloop; 
+                        } 
+                    } 
+                    </span><span class="s0">if </span><span class="s1">(testa.getSize(a) != testb.getSize(b)) { 
+                        System.out.println(</span><span class="s4">&quot;String is not of type L2&quot;</span><span class="s1">); 
+                        </span><span class="s0">break </span><span class="s1">outerloop; 
+                    } 
+                    System.out.println(</span><span class="s4">&quot;String is of type L2&quot;</span><span class="s1">); 
+                } 
+            } 
+        } 
+ 
+    } 
+ 
+    </span><span class="s2">// Method to test if given string is of type L3</span><span class="s1"> 
+    </span><span class="s2">// This method evaluates if number of B's is twice the number of A's. Additionally the method looks for if</span><span class="s1"> 
+    </span><span class="s2">//characters other than A or B are present. The method further evaluates if all B's are preceded by A's</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">LangL3(</span><span class="s0">char</span><span class="s1">[] A) { 
+        outerloop: 
+        { 
+            </span><span class="s2">// checking for null strings</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(A.length == </span><span class="s3">0</span><span class="s1">) { 
+                System.out.println(</span><span class="s4">&quot;Input is empty&quot;</span><span class="s1">); 
+                </span><span class="s0">break </span><span class="s1">outerloop; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s2">// creating empty stacks for analysis</span><span class="s1"> 
+                a = testa.stacks(A.length); 
+                b = testb.stacks(A.length); 
+                </span><span class="s2">//creating a master stack;</span><span class="s1"> 
+                Master = testMaster.stacks(A.length); 
+                </span><span class="s0">for </span><span class="s1">(i = </span><span class="s3">0</span><span class="s1">; i &lt; A.length; i++) { 
+                    testMaster.push(Master, A[i]);</span><span class="s2">// fill the Master array with character values</span><span class="s1"> 
+                } 
+                </span><span class="s2">// check if first value is B or not</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) != </span><span class="s4">'B'</span><span class="s1">) { 
+                    System.out.println(</span><span class="s4">&quot;String is not of type L3&quot;</span><span class="s1">); 
+                    </span><span class="s0">break </span><span class="s1">outerloop; 
+                } 
+                </span><span class="s2">// if first value is A, then</span><span class="s1"> 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">) { 
+                        </span><span class="s2">// fill the stack with all B encountered</span><span class="s1"> 
+                        </span><span class="s0">while </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'B'</span><span class="s1">) { 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testb.push(b, dummy); 
+                        } 
+                        </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'A'</span><span class="s1">) { 
+                            </span><span class="s2">// after filling of B is A is encountered, fill the stack a with A's</span><span class="s1"> 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testa.push(a, dummy); 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            System.out.println(</span><span class="s4">&quot;String is not of type L3&quot;</span><span class="s1">); 
+                            </span><span class="s0">break </span><span class="s1">outerloop; 
+                        } 
+                    } 
+                    </span><span class="s2">// checking the condition for Language L3</span><span class="s1"> 
+                    </span><span class="s0">if </span><span class="s1">(testa.getSize(a) != </span><span class="s3">2 </span><span class="s1">* testb.getSize(b)) { 
+                        System.out.println(</span><span class="s4">&quot;String is not of type L3&quot;</span><span class="s1">); 
+                        </span><span class="s0">break </span><span class="s1">outerloop; 
+                    } 
+                    System.out.println(</span><span class="s4">&quot;String is of type L3&quot;</span><span class="s1">); 
+                } 
+            } 
+        } 
+ 
+    } 
+ 
+    </span><span class="s2">// Method to determine if the language is of type L4</span><span class="s1"> 
+    </span><span class="s2">//This method first evaluates the pattern A^nB^m by calculating m and n. Then it resolves rest of string and verify</span><span class="s1"> 
+    </span><span class="s2">// it against this pattern. Method further searches for characters other than A and B and handles them accordingly.</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">LangL4(</span><span class="s0">char</span><span class="s1">[] A) { 
+        outerloop: 
+        { 
+            </span><span class="s2">// check for null strings</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(A.length == </span><span class="s3">0</span><span class="s1">) { 
+                System.out.println(</span><span class="s4">&quot;Input is empty&quot;</span><span class="s1">); 
+                </span><span class="s0">break </span><span class="s1">outerloop; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s2">// creating empty stacks for analysis</span><span class="s1"> 
+                a = testa.stacks(A.length); 
+                b = testb.stacks(A.length); 
+                </span><span class="s2">//creating a master stack;</span><span class="s1"> 
+                </span><span class="s2">// fill the Master array with character values</span><span class="s1"> 
+                Master = testMaster.stacks(A.length); 
+                </span><span class="s0">for </span><span class="s1">(i = </span><span class="s3">0</span><span class="s1">; i &lt; A.length; i++) { 
+                    testMaster.push(Master, A[i]); 
+                } 
+                </span><span class="s2">// check if first value is B or not</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) != </span><span class="s4">'B'</span><span class="s1">) { 
+                    System.out.println(</span><span class="s4">&quot;String is not of type L4&quot;</span><span class="s1">); 
+                    </span><span class="s0">break </span><span class="s1">outerloop; 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s2">// checks if top element of Stack is B</span><span class="s1"> 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'B'</span><span class="s1">) { 
+                        </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                        </span><span class="s2">// creates a stack with all elements as B</span><span class="s1"> 
+                        testb.push(b, dummy); 
+                    } 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">) { 
+                        </span><span class="s2">// checks if top element is A</span><span class="s1"> 
+                        </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'A'</span><span class="s1">) { 
+                            </span><span class="s2">// creates a stack with all elements as A</span><span class="s1"> 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testa.push(a, dummy); 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            </span><span class="s0">break</span><span class="s1">; 
+                        } 
+                    } 
+                    </span><span class="s0">int </span><span class="s1">m = testa.getSize(a);</span><span class="s2">// evaluates sizes of stacks with all elements A</span><span class="s1"> 
+                    </span><span class="s0">int </span><span class="s1">n = testb.getSize(b);</span><span class="s2">// evaluates sizes of stacks with all elmenets B</span><span class="s1"> 
+                    </span><span class="s2">// check for empty stack after above code is executed, the code above evaluates first group of A^nB^m</span><span class="s1"> 
+                    </span><span class="s2">// and finds m and n. The code below evaluates the subsequent letters after first set of A^nB^m</span><span class="s1"> 
+                    </span><span class="s0">if </span><span class="s1">(testMaster.empty(Master) == </span><span class="s3">1</span><span class="s1">) { 
+                        System.out.println(</span><span class="s4">&quot;String is of Type L4&quot;</span><span class="s1">); 
+                        </span><span class="s0">break </span><span class="s1">outerloop; 
+                    } 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">){ 
+                        </span><span class="s0">if</span><span class="s1">(testMaster.peek(Master)!=</span><span class="s4">'A'</span><span class="s1">|testMaster.peek(Master)!=</span><span class="s4">'B'</span><span class="s1">){ 
+                            System.out.println(</span><span class="s4">&quot;String is not of Type L4&quot;</span><span class="s1">); 
+                            </span><span class="s0">break </span><span class="s1">outerloop; 
+                        } 
+                    } 
+ 
+ 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">) { 
+                        </span><span class="s0">while </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'B'</span><span class="s1">) { 
+                            </span><span class="s2">// creates a stack with all elements as B</span><span class="s1"> 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testb.push(b, dummy); 
+                        } 
+                        </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) == </span><span class="s4">'A'</span><span class="s1">) { 
+                            </span><span class="s2">// creates a stack with all elements as A</span><span class="s1"> 
+                            </span><span class="s0">char </span><span class="s1">dummy = testMaster.pop(Master); 
+                            testa.push(a, dummy); 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            System.out.println(</span><span class="s4">&quot;Not of Type L4&quot;</span><span class="s1">); 
+                        } 
+ 
+                    } 
+                    </span><span class="s0">if </span><span class="s1">(testa.getSize(a) != m | testb.getSize(b) != n) { 
+                        System.out.println(</span><span class="s4">&quot;String is not of type L4&quot;</span><span class="s1">); 
+                        </span><span class="s0">break </span><span class="s1">outerloop; 
+                    } 
+                    System.out.println(</span><span class="s4">&quot;String is of type L4&quot;</span><span class="s1">); 
+                } 
+            } 
+        } 
+    } 
+ 
+</span><span class="s2">//Method evaluates if the String is of TYpe L5 or not. Method looks for C and evaluates strings prior to C and after C</span><span class="s1"> 
+</span><span class="s2">// and check if they are inverted. Method also look for unwanted characters other than A,B or C.</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">LangL5(</span><span class="s0">char</span><span class="s1">[] A) { 
+        outerloop: 
+        { 
+            </span><span class="s2">// checking for empty string</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(A.length == </span><span class="s3">0</span><span class="s1">) { 
+                System.out.println(</span><span class="s4">&quot;Input is empty&quot;</span><span class="s1">); 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s2">// creating 2 stacks to manage A's and B's</span><span class="s1"> 
+                a = testa.stacks(A.length); 
+                b = testb.stacks(A.length); 
+                </span><span class="s2">//creating a master stack;</span><span class="s1"> 
+                Master = testMaster.stacks(A.length); 
+                </span><span class="s2">//push the characters from A into our Master Stack</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(i = </span><span class="s3">0</span><span class="s1">; i &lt; A.length; i++) { 
+                    testMaster.push(Master, A[i]); 
+                } 
+                </span><span class="s2">// checks if top element is A</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(testMaster.peek(Master) != </span><span class="s4">'A'</span><span class="s1">) { 
+                    System.out.println(</span><span class="s4">&quot;String is not of type L5&quot;</span><span class="s1">); 
+                    </span><span class="s0">break </span><span class="s1">outerloop; 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.peek(Master) != </span><span class="s4">'C'</span><span class="s1">) { 
+                        </span><span class="s0">if</span><span class="s1">(testMaster.peek(Master)!=</span><span class="s4">'A'</span><span class="s1">&amp;&amp;testMaster.peek(Master)!=</span><span class="s4">'B'</span><span class="s1">){ 
+                            System.out.println(</span><span class="s4">&quot;String is not of Type L5&quot;</span><span class="s1">); 
+                            </span><span class="s0">break </span><span class="s1">outerloop; 
+                        } 
+                        </span><span class="s2">//empties the Master stack to search C and pops all elements before C into stack a</span><span class="s1"> 
+                        testa.push(a, testMaster.pop(Master)); 
+                        </span><span class="s0">if </span><span class="s1">(testMaster.empty(Master) == </span><span class="s3">1</span><span class="s1">) { 
+                            System.out.println(</span><span class="s4">&quot;String is not of type L5&quot;</span><span class="s1">); 
+                            </span><span class="s0">break </span><span class="s1">outerloop; 
+                        } 
+                    } 
+                    </span><span class="s0">while </span><span class="s1">(testMaster.empty(Master) != </span><span class="s3">1</span><span class="s1">) { 
+                        </span><span class="s2">// compares the elements of Master stack and stack a</span><span class="s1"> 
+                        </span><span class="s0">if </span><span class="s1">(testMaster.pop(Master) == testa.pop(a)) { 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            </span><span class="s0">break</span><span class="s1">; 
+                        } 
+                        </span><span class="s0">break</span><span class="s1">; 
+                    } 
+                    System.out.println(</span><span class="s4">&quot;Sring is of type L5&quot;</span><span class="s1">); 
+ 
+                } 
+ 
+ 
+            } 
+        } 
+    } 
+} 
+ 
+ 
+</span></pre>
+</body>
+</html>
